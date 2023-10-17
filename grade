@@ -1,0 +1,55 @@
+CREATE DATABASE GradeTrackerDB;
+
+USE GradeTrackerDB;
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Age INT
+);
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(100)
+);
+
+CREATE TABLE Grades (
+    GradeID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    Score INT,
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+
+INSERT INTO Students (StudentID, FirstName, LastName, Age)
+VALUES
+    (1, 'Ali', 'Can', 20),
+    (2, 'Can', 'Su', 21),
+    (3, 'Cem', 'Al', 19);
+
+INSERT INTO Courses (CourseID, CourseName)
+VALUES
+    (1, 'Mathematics'),
+    (2, 'English'),
+    (3, 'History');
+
+INSERT INTO Grades (GradeID, StudentID, CourseID, Score)
+VALUES
+    (1, 1, 1, 90),
+    (2, 1, 2, 85),
+    (3, 2, 1, 78),
+    (4, 2, 3, 92),
+    (5, 3, 2, 88);
+
+SELECT
+    Students.FirstName,
+    Students.LastName,
+    Courses.CourseName,
+    Grades.Score
+FROM
+    Students
+JOIN Grades ON Students.StudentID = Grades.StudentID
+JOIN Courses ON Grades.CourseID = Courses.CourseID;
